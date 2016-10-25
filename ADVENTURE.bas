@@ -39,10 +39,13 @@
 99 ------------------------------------
 100 PRINT"{black}{clear}{ct h}";:FORX=1TO20:PRINTSPC(32)"{reverse on}{space*7}":NEXT:FORX=1TO5
 101 PRINT"{reverse on}{space*39}";:IFX<5THENPRINT:NEXT
+104 PRINT"{up*3}{left}"
+105 PRINT"{reverse on}{space*9}basic adventure"
+106 PRINT" f3-restore  f5-select  f7-start {up}"
 120 FORX=52263TO53223STEP40:POKEX,160:NEXT:GOSUB600:GOTO1100
 199 -----------------------------------
 210 PRINT"{reverse off}{home}";:FORX=0TO5:PRINTC$(X)C$(X)C$(X);:NEXT:PRINTC$(6)C$(6);
-215 PRINTG$;:IFG(R)THENPRINT"jk{down}{left*2}jk"
+215 PRINTG$;:IFG(R)THENPRINT"JK{down}{left*2}JK"
 220 RETURN
 230 PRINT"{reverse off}{home}";:IFAAND1THENPRINTC$(6)C$(6);:GOTO232
 231 PRINTC$(7)C$(7);
@@ -76,8 +79,8 @@
 620 DIMDX(2),DY(2),DR(2),DC(2):DC(0)=7:DC(1)=5:DC(2)=2:F(0)=12:F(1)=11:F(2)=0
 621 F(3)=11:F(4)=12:F(5)=15:B(0)=1:B(1)=2:B(2)=4:B(3)=8:B(4)=16:B(5)=32:B(6)=64
 622 B(7)=128:B(8)=256:JK=56320:X1=53248:Y1=53249:N=53262:M=53263:CH=53292
-623 C1=53278:C2=53279:LF=54273:WF=54276:G$="{home}{down*12}{right*15}{black}jk{down}{left*2}"
-624 D$="{sh asterisk}a{right}{down}{left*3}bcd{down}{left*3}efg{down}{left*3}{reverse on}{cm k}{reverse off}{cm g}{reverse on}{cm g}{reverse off}{down}{left*3}{cm c}{reverse on}{cm i}{cm d}{reverse off}{down}{left*3}{right}hi":DEFFNC(Z)=PEEK(C2)AND15:remDEAD DRAGON
+623 C1=53278:C2=53279:LF=54273:WF=54276:G$="{home}{down*12}{right*15}{black}JK{down}{left*2}"
+624 D$="{sh asterisk}A{right}{down}{left*3}BCD{down}{left*3}EFG{down}{left*3}{reverse on}{cm k}{reverse off}{cm g}{reverse on}{cm g}{reverse off}{down}{left*3}{cm c}{reverse on}{cm i}{cm d}{reverse off}{down}{left*3}{right}HI":DEFFNC(Z)=PEEK(C2)AND15:remDEDDRGN
 625 DEFFNO(Z)=PEEK(C1):DEFFNF(Z)=(PEEK(JK)AND16)=.:DEFFNOY(Z)=PEEK(Y1)+Y2
 626 DEFFNE(Z)=PEEK(X1)=24ORPEEK(X1)=0ORPEEK(Y1)=49ORPEEK(Y1)=201:SS=53269
 627 DEFFNOX(Z)=(PEEK(X1)+X2)AND255:DEFFNP(Z)=X>134ANDX<152ANDY>142ANDY<166
@@ -160,7 +163,7 @@
 937 POKELF,16:FORX=0TO80:NEXT:POKEWF,.:GOTO1
 940 IFG(R)=.THEN950
 942 G(R)=.:PRINTG$"{down}  ";:FORX=0TO100:NEXT:PRINT"{up}{left*2}  ":GOTO4
-950 G(R)=1:PRINTG$"jk";:FORX=0TO100:NEXT:PRINT"{down}{left*2}jk":GOTO4
+950 G(R)=1:PRINTG$"JK";:FORX=0TO100:NEXT:PRINT"{down}{left*2}JK":GOTO4
 955 X=PEEK(X1):Y=PEEK(Y1):IFFNL(.)THEN957
 956 GOTO1120
 957 POKE53265,11:POKEY1,201-8:IFL=1ANDR=2THENR=30:GOTO961
@@ -203,20 +206,20 @@
 1023 RETURN
 1024 A=3:IFP(L,X,G)=O(A)THENN(X)=1:RETURN
 1025 RETURN
-1099 ----------------------------------
+1099 REM-SELECT-SKILL-LEVEL---
 1100 S$="{home}{down*9}{right*15}":POKE2,.:L=3:GOSUB750:R$="17323547"
 1101 R=VAL(MID$(R$,INT(RND(1)*4)*2+1,2)):GOSUB650:POKESS,PEEK(SS)-1:L=1
 1102 POKE198,0
 1103 ONLGOSUB1104,1105,1106:GOTO50100
-1104 PRINTS$"lm{down}{left*2}no":RETURN
-1105 PRINTS$"pq{down}{left*2}rs":RETURN
-1106 PRINTS$"tu{down}{left*2}vw":RETURN
+1104 PRINTS$"LM{down}{left*2}NO":RETURN
+1105 PRINTS$"PQ{down}{left*2}RS":RETURN
+1106 PRINTS$"TU{down}{left*2}VW":RETURN
 1109 ----------------------------------
 1110 POKEX1,PEEK(N)+2:POKEWF,33:FORX=18TO0STEP-1:FORC=XTOX+3:POKELF,X:POKELF,C
 1111 NEXT:POKEY1,PEEK(M)+(18-X):NEXT:POKEWF,0:POKE2,0:POKE198,0
 1112 FORQQ=0TO1:POKECH,QQ:SYS51423:FORX=1TO50:NEXT:GETK$:POKE198,0
-1113 IFK$="{f5}"THEN1100
-1114 IFK$="{f7}"THENPOKE53265,11:R=1:POKEX1,140:GOTO1126
+1113 IFK$="{f5}"THEN1100:REM Change Level
+1114 IFK$="{f7}"THENPOKE53265,11:R=1:POKEX1,140:GOTO1126 : REM Start Level
 1116 NEXT:GOTO1112
 1120 IFO(6)<>RTHEN1125
 1121 X=PEEK(X1):Y=PEEK(Y1):TX=PEEK(X(6)):TY=PEEK(Y(6))
@@ -349,7 +352,7 @@
 51015 A=A+1:GOSUB50000:GOTO1100
 51999 ---------------------------------
 52000 PRINT"{home}{black}";:FORX=1TO3:PRINT"{reverse on}{space*32}":NEXT
-52001 PRINT"{home}{reverse on} RESTORE":PRINT"{home}{down}{reverse on} POSITION 1-5 (DEFAULT IS"PEEK(828)"{left}): ";
+52001 PRINT"{home}{reverse on} restore":PRINT"{home}{down}{reverse on} position 1-5 (default is"PEEK(828)"{left}): ";
 52002 GETA$:IFA$="0"THEN1100
 52003 IFA$<"1"ORA$>"5"THEN52002
 52004 POKE53265,11:F$="ADV.SAV/"+A$:GOSUB50005:A=828:A=A+1:L=PEEK(A):A=A+1
